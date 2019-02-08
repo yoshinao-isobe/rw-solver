@@ -1,0 +1,114 @@
+// Copyright (C) 2018
+// AIST Program-IP No. H30PRO-2219
+// National Institute of Advanced Industrial Science and Technology (AIST),
+// East Japan Railway Company (JR-East)
+
+// --- railway model --- //
+
+@train_top_margin    = 96
+@train_bottom_margin = 96
+@train_offset        = 96
+
+@circle_raidus       = 24
+@pen_width_station   = 16
+@pen_width_rail      = 16
+@pen_width_dash      = 16
+@pen_dash_on_length  = 8
+@pen_dash_off_length = 8
+
+@font_size_station   = 110 // 96 // 128 // 64
+@font_size_time      = 110 // 96 // 128 // 64
+
+max_time = 1470
+period = 720
+
+struct {
+  station
+  capacity = 2
+  links = [1,2]
+}
+
+struct {
+  capacity = 4
+  headway = 30
+  links = [1,2,3,4]
+  req_time = (240, 360)
+  fifos = [(1,3),(4,2)]
+}
+
+struct {
+  station
+  capacity = 3
+  headway = 30
+  links = [3,4,5]
+  req_time = (10, 120)
+}
+
+struct {
+  capacity = 2
+  headway = 30
+  links = [5,6]
+  req_time = (240, 300)
+  excls = [(5,6)]
+  fifos = [(5,6),(6,5)]
+}
+
+struct {
+  station
+  capacity = 3
+  headway = 30
+  links = [6,7,8]
+  req_time = (10, 120)
+}
+
+struct {
+  capacity = 4
+  headway = 30
+  links = [7,8,9,10]
+  req_time = (240, 360)
+  fifos = [(7,9),(10,8)]
+}
+
+struct {
+  station
+  capacity = 2
+  links = [9,10]
+}
+
+
+// inbound local 
+
+train {
+  start_time = (0,0)
+  route = [1,3,5,6,7,9]
+  req_times = [(350,360),(60,120),(290,300),(60,120),(350,360)]
+  req_tracks = [{1,2},{1,2},_,{1,2},{1,2}]
+}
+
+// inbound express
+
+train {
+  start_time = (240,720)
+  route = [1,3,5,6,7,9]
+  req_times = [(240,250),(10,20),(240,250),(10,20),(240,250)]
+  req_tracks = [{1,2},{2},_,{2},{1,2}]
+}
+
+// outbound local
+
+train {
+  start_time = (0,720)
+  route = [10,8,6,5,4,2]
+  req_times = [(350,360),(60,120),(290,300),(60,120),(350,360)]
+  req_tracks = [{3,4},{2,3},_,{2,3},{3,4}]
+}
+
+// outbound express
+
+train {
+  start_time = (0,720)
+  route = [10,8,6,5,4,2]
+  req_times = [(240,250),(10,20),(240,250),(10,20),(240,250)]
+  req_tracks = [{3,4},{2},_,{2},{3,4}]
+}
+
