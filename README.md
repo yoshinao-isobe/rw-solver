@@ -18,7 +18,7 @@ See the manual contained in the folder "manual".
 
 # License
 
-GPLv3 or later  
+[GPLv3](LICENSE.txt) or later  
 (AIST program administration number: H30PRO-2219)
 
 # Reference
